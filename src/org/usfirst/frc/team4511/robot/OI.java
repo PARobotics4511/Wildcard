@@ -21,11 +21,11 @@ public class OI {
 	public static Joystick stick1 = new Joystick(0);
 	public static Joystick stick2 = new Joystick(1);
    
-	Button button1 = new JoystickButton(stick1, 1);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
     public OI(){
+    	JoystickButton button1 = new JoystickButton(stick1, 1);
     	button1.whenPressed(new AutoAlign());
     }
 	

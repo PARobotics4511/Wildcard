@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4511.robot.subsystems;
 
+import org.usfirst.frc.team4511.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -7,10 +9,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  *
  */
 public class Vision extends Subsystem {
-    NetworkTable table;
    
     public Vision(){
-    	table = NetworkTable.getTable("GRIP/Contours");
+    	
     }
     
     public void initDefaultCommand() {
@@ -21,7 +22,7 @@ public class Vision extends Subsystem {
     public double getDistanceFromTarget(){
     	double distance;
     	double[] defaultValue = new double[0];
-    	double[] widths = table.getNumberArray("width", defaultValue);
+    	double[] widths = Robot.table.getNumberArray("width", defaultValue);
     	distance = (1060*2)/widths[0];
     	return distance;
     }

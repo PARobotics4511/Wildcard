@@ -20,7 +20,10 @@ public class DriveTrain extends Subsystem {
 	static CANTalon backLeft = new CANTalon(RobotMap.bLeft);
 	static CANTalon backRight = new CANTalon(RobotMap.bRight);
 	
-	static RobotDrive rDrive = new RobotDrive(frontLeft, frontRight, backLeft, backRight);
+	static RobotDrive rDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
+	public DriveTrain(){
+		rDrive.setSafetyEnabled(false);
+	}
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new Drive());

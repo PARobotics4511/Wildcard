@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoAlign extends Command {
-
+	double distance; 
     public AutoAlign() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -19,28 +19,41 @@ public class AutoAlign extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+  
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double distance = Robot.vision.getDistanceFromTarget();
+    	distance = Robot.vision.getDistanceFromTarget();
     	double gyroPosition = Robot.drivetrain.gyro.getAngle();
     	if (distance <= 20){
-    		if(gyroPosition < 3 && gyroPosition > -3){
-    			DriveTrain.drive(-.2, -.2);
+    		//if(gyroPosition < 3 && gyroPosition > -3){
+    			DriveTrain.drive(.3, .3);
+    			Timer.delay(2);
+    			DriveTrain.drive(-.4, -.4);
     			Timer.delay(2);
     			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    		}
+    		//}
     	}else if (distance > 20){
-    		if(gyroPosition < 5 && gyroPosition > -5){
-    			new AutoDriveStraight();
+    		//if(gyroPosition < 5 && gyroPosition > -5){
+    		boolean tooFar = true;
+    		while(tooFar){
+    			DriveTrain.drive(.4, .4);
+    			distance = Robot.vision.getDistanceFromTarget(); 
+    			if(distance <= 20){
+    				//if(gyroPosition < 3 && gyroPosition > -3){
+    	    			DriveTrain.drive(.3, .3);
+    	    			Timer.delay(2);
+    	    			DriveTrain.drive(-.4, -.4);
+    	    			Timer.delay(2);
+    	    			DriveTrain.stop();
+    	    			tooFar = false;
+    				//}
+    			}
     		}
     	}
     }
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

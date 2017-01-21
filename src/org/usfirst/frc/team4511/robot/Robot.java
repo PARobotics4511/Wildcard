@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team4511.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
@@ -30,7 +31,11 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
-
+    public static NetworkTable table;
+    
+    public Robot(){
+    	table = NetworkTable.getTable("GRIP/Contours");
+    }
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -41,10 +46,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        while(true){
-        	System.out.print(vision.getDistanceFromTarget());
-        	System.out.println();
-        }  
+       
     }
 	
 	/**
