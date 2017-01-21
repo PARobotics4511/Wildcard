@@ -8,9 +8,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class Vision extends Subsystem {
     NetworkTable table;
-    public static final double xRes = 320;
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+   
     public Vision(){
     	table = NetworkTable.getTable("GRIP/Contours");
     }

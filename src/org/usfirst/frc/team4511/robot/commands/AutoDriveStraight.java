@@ -9,46 +9,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoAlign extends Command {
+public class AutoDriveStraight extends Command {
 
-    public AutoAlign() {
+    public AutoDriveStraight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.drivetrain);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double distance = Robot.vision.getDistanceFromTarget();
-    	double gyroPosition = Robot.drivetrain.gyro.getAngle();
-    	if (distance <= 20){
-    		if(gyroPosition < 3 && gyroPosition > -3){
-    			DriveTrain.drive(-.2, -.2);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
-    		}
-    	}else if (distance > 20){
-    		if(gyroPosition < 5 && gyroPosition > -5){
-    			DriveTrain.drive(-.4, -.4);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
-    		}
-    	}
+    	double angle = Robot.drivetrain.gyro.getAngle();
+    	DriveTrain.angleDriveStraight(angle);
+    	Timer.delay(4);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
