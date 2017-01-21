@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4511.robot.commands;
 
+import org.usfirst.frc.team4511.robot.OI;
 import org.usfirst.frc.team4511.robot.Robot;
+import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,7 +23,7 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	DriveTrain.drive(OI.getYInput(OI.stick1), OI.getYInput(OI.stick2));
     }
 
     // Make this return true when this Command no longer needs to run execute()

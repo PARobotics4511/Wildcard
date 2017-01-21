@@ -25,7 +25,7 @@ public class AutoAlign extends Command {
     protected void execute() {
     	double distance = Robot.vision.getDistanceFromTarget();
     	double gyroPosition = Robot.drivetrain.gyro.getAngle();
-    	if (distance <= 12){
+    	if (distance <= 20){
     		if(gyroPosition < 5 && gyroPosition > -5){
     			DriveTrain.drive(-.2, -.2);
     			Timer.delay(2);
@@ -34,7 +34,7 @@ public class AutoAlign extends Command {
     			DriveTrain.drive(.4, .4);
     			Timer.delay(2);
     		}
-    	}else if (distance > 12){
+    	}else if (distance > 20){
     		if(gyroPosition < 5 && gyroPosition > -5){
     			DriveTrain.drive(-.4, -.4);
     			Timer.delay(2);
