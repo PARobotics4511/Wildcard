@@ -1,20 +1,18 @@
 package org.usfirst.frc.team4511.robot.commands;
 
 import org.usfirst.frc.team4511.robot.Robot;
-import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoAlign extends Command {
+public class Drive extends Command {
 
-    public AutoAlign() {
+    public Drive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.drivetrain);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
@@ -23,27 +21,7 @@ public class AutoAlign extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double distance = Robot.vision.getDistanceFromTarget();
-    	double gyroPosition = Robot.drivetrain.gyro.getAngle();
-    	if (distance <= 12){
-    		if(gyroPosition < 5 && gyroPosition > -5){
-    			DriveTrain.drive(-.2, -.2);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
-    		}
-    	}else if (distance > 12){
-    		if(gyroPosition < 5 && gyroPosition > -5){
-    			DriveTrain.drive(-.4, -.4);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
-    		}
-    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
