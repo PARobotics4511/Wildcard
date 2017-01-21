@@ -14,7 +14,7 @@ public class AutoAlign extends Command {
     public AutoAlign() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.drivetrain);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
@@ -33,26 +33,23 @@ public class AutoAlign extends Command {
     			Timer.delay(1);
     			DriveTrain.drive(.4, .4);
     			Timer.delay(2);
+    			DriveTrain.stop();
     		}
     	}else if (distance > 20){
     		if(gyroPosition < 5 && gyroPosition > -5){
-    			DriveTrain.drive(-.4, -.4);
-    			Timer.delay(2);
-    			DriveTrain.stop();
-    			Timer.delay(1);
-    			DriveTrain.drive(.4, .4);
-    			Timer.delay(2);
+    			new AutoDriveStraight();
     		}
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	DriveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same

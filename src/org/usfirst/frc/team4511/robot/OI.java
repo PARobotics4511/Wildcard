@@ -1,7 +1,10 @@
 package org.usfirst.frc.team4511.robot;
 
+import org.usfirst.frc.team4511.robot.commands.AutoAlign;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,10 +21,14 @@ public class OI {
 	public static Joystick stick1 = new Joystick(0);
 	public static Joystick stick2 = new Joystick(1);
    
+	Button button1 = new JoystickButton(stick1, 1);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
-    
+    public OI(){
+    	button1.whenPressed(new AutoAlign());
+    }
+	
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
