@@ -22,27 +22,20 @@ public class Vision extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public double getDistanceFromTarget(){
+    public Pair<Double, Boolean> getDistanceFromTarget(){
     	double distance = 0;
+    	boolean issue;
     	double[] defaultValue = new double[0];
     	double[] widths = Robot.table.getNumberArray("width", defaultValue);
-    	if (widths.length == 0){
-    		boolean issue = true;
-    		while(issue){
-    	    	widths = Robot.table.getNumberArray("width", defaultValue);
-    	    	if(widths.length != 0){
-    	    		issue = false;
-    	    		distance = (835*2)/widths[0];
-    	    	}else{
-    	    		DriveTrain.drive(.15, .15);
-    	    	}
-    	    	
-    		}
-    	}
+    	if(widths.length != 0){
+    	    issue = false;
+    	    distance = (835*2)/widths[0];
+    	    }
     	else{
-    		distance = (835*2)/widths[0];
+    		distance = 0;
+    		issue = true;
     	}
-    	return distance;
+    	return new Pair<>(distance issue);
     }
     
     public double getXPos(){
@@ -54,8 +47,8 @@ public class Vision extends Subsystem {
     		boolean issue = true;
     		while(issue){
     			centers = Robot.table.getNumberArray("centerX", defaultValue);
-    			if(centers.length != 0){
-    				xPos = -((centers[0]-(cameraX/2))/(cameraX/2));
+    			if(centers.length == 2){
+    				xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
     				issue = false;
     			}else{
     	    		DriveTrain.drive(.15, .15);
@@ -63,7 +56,7 @@ public class Vision extends Subsystem {
     		}
     	    
     	}else{
-    		xPos = -((centers[0]-(cameraX/2))/(cameraX/2));
+			xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
     	}
     	return xPos;
     }

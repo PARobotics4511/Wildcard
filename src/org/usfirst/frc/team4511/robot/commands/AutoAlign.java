@@ -50,11 +50,11 @@ public class AutoAlign extends Command {
     			}
     			else if(Robot.vision.getXPos() > 0){
     				while(Robot.vision.getXPos() > 0.12){
-    					DriveTrain.drive(.30,.45);
+    					DriveTrain.drive(.30,.5);
     				}
     			}else if(Robot.vision.getXPos() < 0){
     				while(Robot.vision.getXPos() < -.12){
-    					DriveTrain.drive(.45,.30);
+    					DriveTrain.drive(.5,.30);
     				}
     			}
     			distance = Robot.vision.getDistanceFromTarget(); 
