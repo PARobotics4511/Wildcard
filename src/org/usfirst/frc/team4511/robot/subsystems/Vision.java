@@ -28,12 +28,12 @@ public class Vision extends Subsystem {
     	double[] defaultValue = new double[0];
     	double[] widths = Robot.table.getNumberArray("width", defaultValue);
     	if(widths.length != 0){
-    	    issue = false;
+    	    issue = true;
     	    distance = (835*2)/widths[0];
     	    }
     	else{
     		distance = 0;
-    		issue = true;
+    		issue = false;
     	}
     	return new Pair<>(distance, issue);
     }
@@ -46,10 +46,10 @@ public class Vision extends Subsystem {
     	boolean issue;
     	if(centers.length == 2){
     		xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
-    		issue = false;
+    		issue = true;
     	}else{
     	    xPos = 0;
-    	    issue = true;
+    	    issue = false;
     	    }
     	return new Pair<>(xPos, issue);
     	}

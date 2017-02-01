@@ -41,7 +41,7 @@ public class AutoAlign extends Command {
     	}else if (distance.t > 20 && distance.u == true){
     		boolean tooFar = true;
     		while(tooFar){
-    			if(xPosition.u){
+    			if(!xPosition.u){
 	    			if(xPosition.t < .1 && xPosition.t > -.1){
 	    				DriveTrain.drive(.4, .4);
 	    				continue;
