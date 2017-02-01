@@ -3,7 +3,7 @@ package org.usfirst.frc.team4511.robot.subsystems;
 import java.sql.Time;
 
 import org.usfirst.frc.team4511.robot.Robot;
-
+import org.usfirst.frc.team4511.robot.commands.Pair;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -35,30 +35,25 @@ public class Vision extends Subsystem {
     		distance = 0;
     		issue = true;
     	}
-    	return new Pair<>(distance issue);
+    	return new Pair<>(distance, issue);
     }
     
-    public double getXPos(){
+    public Pair<Double, Boolean> getXPos(){
     	int cameraX = 640;
     	double[] defaultValue = new double[0];
     	double[] centers = Robot.table.getNumberArray("centerX", defaultValue);
     	double xPos = 0;
-    	if(centers.length == 0){
-    		boolean issue = true;
-    		while(issue){
-    			centers = Robot.table.getNumberArray("centerX", defaultValue);
-    			if(centers.length == 2){
-    				xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
-    				issue = false;
-    			}else{
-    	    		DriveTrain.drive(.15, .15);
-    	    	}
-    		}
-    	    
+    	boolean issue;
+    	if(centers.length == 2){
+    		xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
+    		issue = false;
     	}else{
-			xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
+    	    xPos = 0;
+    	    issue = true;
+    	    }
+    	return new Pair<>(xPos, issue);
     	}
-    	return xPos;
-    }
-}
+    	    
+	}   	
+
 

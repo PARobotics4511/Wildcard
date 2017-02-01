@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoAlign extends Command {
-	double distance; 
-	double xPosition;
+	Pair<Double, Boolean> distance; 
+	Pair<Double, Boolean> xPosition;
     public AutoAlign() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -27,46 +27,50 @@ public class AutoAlign extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	distance = Robot.vision.getDistanceFromTarget();
-    	//double gyroPosition = Robot.drivetrain.gyro.getAngle();
-    	xPosition = Robot.vision.getXPos();
-    	/*System.out.print("Distance: " + distance);
+    	/* Debugging
+    	 * System.out.print("Distance: " + distance);
     	System.out.println();
     	System.out.print("Position: " + xPosition);
     	System.out.println();*/
-    	if (distance <= 20){
-    		//if(gyroPosition < 3 && gyroPosition > -3){
+    	if (distance.t <= 20 && distance.u == true){
     			DriveTrain.drive(.3, .3);
     			Timer.delay(2);
     			DriveTrain.drive(-.4, -.4);
     			Timer.delay(2);
     			DriveTrain.stop();
-    		//}
-    	}else if (distance > 20){
-    		//if(gyroPosition < 5 && gyroPosition > -5){
+    	}else if (distance.t > 20 && distance.u == true){
     		boolean tooFar = true;
     		while(tooFar){
-    			if(Robot.vision.getXPos() < .1 && Robot.vision.getXPos() > -.1){
-    				DriveTrain.drive(.4, .4);
-    			}
-    			else if(Robot.vision.getXPos() > 0){
-    				while(Robot.vision.getXPos() > 0.12){
-    					DriveTrain.drive(.30,.5);
-    				}
-    			}else if(Robot.vision.getXPos() < 0){
-    				while(Robot.vision.getXPos() < -.12){
-    					DriveTrain.drive(.5,.30);
-    				}
+    			if(xPosition.u){
+	    			if(xPosition.t < .1 && xPosition.t > -.1){
+	    				DriveTrain.drive(.4, .4);
+	    				continue;
+	    			}
+	    			else if(xPosition.t > 0){
+	    				while(xPosition.t > 0.12){
+	    					DriveTrain.drive(.30,.5);
+	    					continue;
+	    				}
+	    			}else if(xPosition.t < 0){
+	    				while(xPosition.t < -.12){
+	    					DriveTrain.drive(.5,.30);
+	    					continue;
+	    				}
+	    			}
+    			}else{
+    				DriveTrain.drive(.25, .25);
     			}
     			distance = Robot.vision.getDistanceFromTarget(); 
-    			if(distance <= 20){
-    				//if(gyroPosition < 3 && gyroPosition > -3){
+    			if(distance.t <= 20 && distance.u == true){
     	    			DriveTrain.drive(.3, .3);
     	    			Timer.delay(2);
     	    			DriveTrain.drive(-.4, -.4);
     	    			Timer.delay(2);
     	    			DriveTrain.stop();
     	    			tooFar = false;
-    				//}
+    			}else if (distance.u == false){
+    				DriveTrain.drive(.25, .25);
+    				continue;
     			}
     		}
     	}
