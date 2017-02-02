@@ -1,12 +1,8 @@
 package org.usfirst.frc.team4511.robot.subsystems;
 
-import java.sql.Time;
-
 import org.usfirst.frc.team4511.robot.Robot;
 import org.usfirst.frc.team4511.robot.commands.Pair;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -18,8 +14,7 @@ public class Vision extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+       
     }
     
     public Pair<Double, Boolean> getDistanceFromTarget(){
@@ -28,12 +23,12 @@ public class Vision extends Subsystem {
     	double[] defaultValue = new double[0];
     	double[] widths = Robot.table.getNumberArray("width", defaultValue);
     	if(widths.length != 0){
-    	    issue = true;
+    	    issue = false;
     	    distance = (835*2)/widths[0];
     	    }
     	else{
     		distance = 0;
-    		issue = false;
+    		issue = true;
     	}
     	return new Pair<>(distance, issue);
     }
@@ -46,10 +41,10 @@ public class Vision extends Subsystem {
     	boolean issue;
     	if(centers.length == 2){
     		xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
-    		issue = true;
+    		issue = false;
     	}else{
     	    xPos = 0;
-    	    issue = false;
+    	    issue = true;
     	    }
     	return new Pair<>(xPos, issue);
     	}
