@@ -28,6 +28,9 @@ public class AutoAlign extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	distance = Robot.vision.getDistanceFromTarget();
+    	xPosition = Robot.vision.getXPos();
+    	System.out.println("Position coord: " + xPosition.t + " , " + "Issue: " + xPosition.u);
+    	System.out.println("Distance number: " + distance.t + " , " + "Issue " + distance.u);
     	/* Debugging
     	 * System.out.print("Distance: " + distance);
     	System.out.println();
@@ -49,29 +52,54 @@ public class AutoAlign extends Command {
     				break;
     			}
     			distance = Robot.vision.getDistanceFromTarget(); 
+    			xPosition = Robot.vision.getXPos();
+    			System.out.println("xPos: " + xPosition.t);
     			if(!xPosition.u){
 	    			if(xPosition.t < .12 && xPosition.t > -.12){
-	    				DriveTrain.drive(.4, .4);
-	    				System.out.println("Within bounds");
-	    				continue;
+    					while(xPosition.t < .12 && xPosition.t > -.12){
+    					xPosition = Robot.vision.getXPos();	
+    					DriveTrain.drive(.4, .4);
+	    				if(button2.get()){
+	        				tooFar = false;
+	        				System.out.println("Terminating");
+	        				break;
+	        			}
+    					}
+	    				//System.out.println("Within bounds");
 	    			}
-	    			else if(xPosition.t > 0.12){
-	    				while(xPosition.t > 0.12){
-	    					DriveTrain.drive(.30,.5);
+	    			else if(xPosition.t > 0.2){
+	    				while(xPosition.t > 0.2){
+	    					xPosition = Robot.vision.getXPos();
+	    					DriveTrain.drive(.25,.4);
+	    					if(button2.get()){
+	    	    				tooFar = false;
+	    	    				System.out.println("Terminating");
+	    	    				break;
+	    	    			}
 	    					System.out.println("Too far to right");
-	    					continue;
 	    				}
-	    			}else if(xPosition.t < -0.12){
-	    				while(xPosition.t < -.12){
-	    					DriveTrain.drive(.5,.30);
+	    			}else if(xPosition.t < -0.2){
+	    				while(xPosition.t < -.2){
+	    					xPosition = Robot.vision.getXPos();
+	    					DriveTrain.drive(.4,.25);
+	    					if(button2.get()){
+	    	    				tooFar = false;
+	    	    				System.out.println("Terminating");
+	    	    				break;
+	    	    			}
 	    					System.out.println("Too far to left");
-	    					continue;
 	    				}
 	    			}
     			}else{
+    				while(xPosition.u){
     				DriveTrain.drive(.25, .25);
-    				System.out.println("No position found inside loop");
-    				continue;
+    				if(button2.get()){
+        				tooFar = false;
+        				System.out.println("Terminating");
+        				break;
+        			}
+    				}
+    				//System.out.println("No position found inside loop");
     			}
     			
     			if(distance.t <= 20 && distance.u == false){
@@ -82,13 +110,21 @@ public class AutoAlign extends Command {
     	    			DriveTrain.stop();
     	    			System.out.println("Exiting loop");
     	    			tooFar = false;
-    	    			break;
     			}else if (distance.u == true){
-    				DriveTrain.drive(.25, .25);
-    				System.out.println("No distance found inside loop");
-    				continue;
+    				distance = Robot.vision.getDistanceFromTarget();
+    				while(distance.u){
+    					DriveTrain.drive(.25, .25);
+    					if(button2.get()){
+            				tooFar = false;
+            				System.out.println("Terminating");
+            				break;
+            			}
+    				}
+    				//System.out.println("No distance found inside loop");
     			}
     		}
+    	}else{
+    		DriveTrain.drive(.25, .25);
     	}
     }
     

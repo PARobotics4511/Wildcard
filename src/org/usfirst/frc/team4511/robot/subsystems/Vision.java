@@ -39,8 +39,8 @@ public class Vision extends Subsystem {
     	double[] centers = Robot.table.getNumberArray("centerX", defaultValue);
     	double xPos = 0;
     	boolean issue;
-    	if(centers.length == 2){
-    		xPos = -(Math.abs((centers[0]-centers[1])/2)-(cameraX/2)/(cameraX/2));
+    	if(centers.length != 0){
+    		xPos = -(centers[0]-(cameraX/2))/(cameraX/2);
     		issue = false;
     	}else{
     	    xPos = 0;
