@@ -67,8 +67,8 @@ public class AutoAlign extends Command {
     					}
 	    				//System.out.println("Within bounds");
 	    			}
-	    			else if(xPosition.t > 0.2){
-	    				while(xPosition.t > 0.2){
+	    			else if(xPosition.t > 0.12){
+	    				while(xPosition.t > 0.12){
 	    					xPosition = Robot.vision.getXPos();
 	    					DriveTrain.drive(.25,.4);
 	    					if(button2.get()){
@@ -78,8 +78,8 @@ public class AutoAlign extends Command {
 	    	    			}
 	    					System.out.println("Too far to right");
 	    				}
-	    			}else if(xPosition.t < -0.2){
-	    				while(xPosition.t < -.2){
+	    			}else if(xPosition.t < -0.12){
+	    				while(xPosition.t < -.12){
 	    					xPosition = Robot.vision.getXPos();
 	    					DriveTrain.drive(.4,.25);
 	    					if(button2.get()){
