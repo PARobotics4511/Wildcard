@@ -31,6 +31,7 @@ public class Vision extends Subsystem {
     	int cameraX = 640;
     	double[] defaultValue = new double[0];
     	double[] centers = Robot.table.getNumberArray("centerX", defaultValue);
+    	System.out.println(centers.length);
     	double xPos = 0;
     	if(centers.length == 2){
     		xPos = -((centers[1]-centers[0])-(cameraX/2))/(cameraX/2);

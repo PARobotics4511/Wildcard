@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4511.robot;
 
+import org.usfirst.frc.team4511.robot.commands.Align;
 import org.usfirst.frc.team4511.robot.commands.AutoAlign;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -26,7 +27,7 @@ public class OI {
     // commands the same as any other Button.
     public OI(){
     	JoystickButton button1 = new JoystickButton(stick1, 1);
-    	button1.whenPressed(new AutoAlign());
+    	button1.whenPressed(new Align());
     }
 	
     //// TRIGGERING COMMANDS WITH BUTTONS
