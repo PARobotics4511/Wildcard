@@ -1,20 +1,18 @@
 package org.usfirst.frc.team4511.robot.commands;
 
-import org.usfirst.frc.team4511.robot.OI;
 import org.usfirst.frc.team4511.robot.Robot;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoAlign extends Command {
-	Pair<Double, Boolean> distance; 
+public class Align extends Command {
+
+	Pair<Double, Boolean> distance;
 	Pair<Double, Boolean> xPosition;
-	JoystickButton button2 = new JoystickButton(OI.stick2, 1);
 	final double POS_THRESHOLD = .1;
 	final double NEG_THRESHOLD = -.1;
 	final double TARGET_DISTANCE = 10;
@@ -22,7 +20,7 @@ public class AutoAlign extends Command {
 	final double turnSpeed = .3;
 	boolean shouldExit;
 	boolean commandDone;
-	public AutoAlign() {
+	public Align() {
     	requires(Robot.vision);
     	requires(Robot.drivetrain);
     }
@@ -56,6 +54,7 @@ public class AutoAlign extends Command {
     		DriveTrain.stop();
     		commandDone = true;
     	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -66,11 +65,8 @@ public class AutoAlign extends Command {
     	return false;
     }
 
-
     // Called once after isFinished returns true
     protected void end() {
-    	DriveTrain.stop();
-    	shouldExit = false;
     }
 
     // Called when another command which requires one or more of the same
