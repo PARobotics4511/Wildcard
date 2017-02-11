@@ -19,4 +19,5 @@ public class RobotMap {
 	public static final int fRight = 2;
 	public static final int bLeft = 3;
 	public static final int bRight = 4;
+	public static final int lift = 5;
 }

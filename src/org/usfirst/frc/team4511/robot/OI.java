@@ -1,6 +1,10 @@
 package org.usfirst.frc.team4511.robot;
 
 import org.usfirst.frc.team4511.robot.commands.AutoAlign;
+import org.usfirst.frc.team4511.robot.commands.LiftDown;
+import org.usfirst.frc.team4511.robot.commands.LiftUp;
+import org.usfirst.frc.team4511.robot.commands.LineDrive;
+import org.usfirst.frc.team4511.robot.commands.Stop;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -26,7 +30,17 @@ public class OI {
     // commands the same as any other Button.
     public OI(){
     	JoystickButton button1 = new JoystickButton(stick1, 1);
+    	JoystickButton button3l = new JoystickButton(stick1, 3);
+    	JoystickButton button3r = new JoystickButton(stick2, 3);
+    	JoystickButton button6r = new JoystickButton(stick2, 6);
+
     	button1.whenPressed(new AutoAlign());
+    	button3l.whileHeld(new LiftDown());
+    	button3l.whenReleased(new Stop());
+    	button3r.whileHeld(new LiftUp());
+    	button3r.whenReleased(new Stop());
+    	button6r.whenPressed(new LineDrive());
+
     }
 	
     //// TRIGGERING COMMANDS WITH BUTTONS

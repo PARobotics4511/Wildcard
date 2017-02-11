@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team4511.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4511.robot.subsystems.GearLift;
+import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
 import org.usfirst.frc.team4511.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,6 +29,10 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final Vision vision = new Vision();
 	public static final DriveTrain drivetrain = new DriveTrain();
+	public static final GearLift lift = new GearLift();
+	public static final PhotoEye leftEye = new PhotoEye(2);
+	public static final PhotoEye rightEye = new PhotoEye(3);
+	public static final PhotoEye middleEye = new PhotoEye(1);
 	public static OI oi;
 
     Command autonomousCommand;
