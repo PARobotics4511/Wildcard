@@ -21,8 +21,11 @@ public class Vision extends Subsystem {
     	double distance = 0;
     	double[] defaultValue = new double[0];
     	double[] widths = Robot.table.getNumberArray("width", defaultValue);
-    	if(widths.length == 2){
+    	/*if(widths.length == 2){
     	    distance = (835*2)/widths[0];
+    	}*/
+    	if(widths.length > 0){
+    		distance = (835*2/widths[0]);
     	}
     	return new Pair<>(distance, widths.length != 2);
     }
