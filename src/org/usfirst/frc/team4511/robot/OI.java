@@ -1,11 +1,15 @@
 package org.usfirst.frc.team4511.robot;
 
 import org.usfirst.frc.team4511.robot.commands.Align;
+import org.usfirst.frc.team4511.robot.commands.ArmDown;
+import org.usfirst.frc.team4511.robot.commands.ArmUp;
 import org.usfirst.frc.team4511.robot.commands.AutoAlign;
+import org.usfirst.frc.team4511.robot.commands.DriveForward;
 import org.usfirst.frc.team4511.robot.commands.LiftDown;
 import org.usfirst.frc.team4511.robot.commands.LiftUp;
 import org.usfirst.frc.team4511.robot.commands.LineDrive;
 import org.usfirst.frc.team4511.robot.commands.Stop;
+import org.usfirst.frc.team4511.robot.commands.TestStuff;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -35,13 +39,16 @@ public class OI {
     	JoystickButton button3l = new JoystickButton(stick1, 3);
     	JoystickButton button3r = new JoystickButton(stick2, 3);
     	JoystickButton button6r = new JoystickButton(stick2, 6);
+    	JoystickButton button7r = new JoystickButton(stick2, 7);
 
     	button1.whenPressed(new AutoAlign());
-    	button3l.whileHeld(new LiftDown());
-    	button3l.whenReleased(new Stop());
-    	button3r.whileHeld(new LiftUp());
-    	button3r.whenReleased(new Stop());
+    	button3l.whenPressed(new ArmDown());
+    	//button3l.whenReleased(new Stop());
+    	button3r.whenPressed(new ArmUp());
+    	//button3r.whenReleased(new Stop());
+    	//button6r.whenPressed(new DriveForward());
     	button6r.whenPressed(new LineDrive());
+    	button7r.whenPressed(new TestStuff());
     }
 	
     //// TRIGGERING COMMANDS WITH BUTTONS

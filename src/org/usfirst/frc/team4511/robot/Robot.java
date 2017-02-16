@@ -3,12 +3,14 @@ package org.usfirst.frc.team4511.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team4511.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4511.robot.subsystems.Arm;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4511.robot.subsystems.GearLift;
@@ -34,6 +36,9 @@ public class Robot extends IterativeRobot {
 	public static final PhotoEye leftEye = new PhotoEye(2);
 	public static final PhotoEye rightEye = new PhotoEye(3);
 	public static final PhotoEye middleEye = new PhotoEye(1);
+	public static final PhotoEye armEye = new PhotoEye(0);
+	public static final Arm armUno = new Arm(9);
+	public static final Arm armDos = new Arm(8);
 	public static OI oi;
 
     Command autonomousCommand;
@@ -119,6 +124,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        if((Robot.armEye.getVoltage()*1000) > 3172){
+        	System.out.println("Gear in place!");
+        }else{
+        	System.out.println("No gear! Get good kid.");
+        }
     }
     
     /**
