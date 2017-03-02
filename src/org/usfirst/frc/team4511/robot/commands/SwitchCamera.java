@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TestStuff extends Command {
+public class SwitchCamera extends Command {
 
-    public TestStuff() {
+	boolean done;
+    public SwitchCamera() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.vision);
     }
 
     // Called just before this Command runs the first time
@@ -21,15 +21,24 @@ public class TestStuff extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//System.out.println("Distance: " + Robot.vision.getDistanceFromTarget().t);
-    	System.out.println("Left Eye: " + Robot.leftEye.getVoltage());
-    	System.out.println("Right Eye: " + Robot.rightEye.getVoltage());
-    	//System.out.println("Middle Eye: " + Robot.middleEye.getVoltage());
+    	/*if (Robot.CamName == "cam0"){
+    		Robot.CamName = "cam2";
+    		Robot.CamNumber = 2;
+    		done = true;
+    	}else if(Robot.CamName == "cam2"){
+    		Robot.CamName = "cam0";
+    		Robot.CamNumber = 0;
+    		done = true;
+    	}else{
+    		Robot.CamName = "cam2";
+    		Robot.CamNumber = 2;
+    		done = true;
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

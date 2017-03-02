@@ -7,8 +7,11 @@ import org.usfirst.frc.team4511.robot.commands.AutoAlign;
 import org.usfirst.frc.team4511.robot.commands.DriveForward;
 import org.usfirst.frc.team4511.robot.commands.LiftDown;
 import org.usfirst.frc.team4511.robot.commands.LiftUp;
+import org.usfirst.frc.team4511.robot.commands.LineAutoV2;
 import org.usfirst.frc.team4511.robot.commands.LineDrive;
+import org.usfirst.frc.team4511.robot.commands.NewAuto;
 import org.usfirst.frc.team4511.robot.commands.Stop;
+import org.usfirst.frc.team4511.robot.commands.SwitchCamera;
 import org.usfirst.frc.team4511.robot.commands.TestStuff;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -34,21 +37,29 @@ public class OI {
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
     public OI(){
-    	JoystickButton button1 = new JoystickButton(stick1, 1);
-
+    	JoystickButton button1l = new JoystickButton(stick1, 1);
+    	JoystickButton button1r = new JoystickButton(stick2, 1);
+    	JoystickButton button2r = new JoystickButton(stick2, 2);
     	JoystickButton button3l = new JoystickButton(stick1, 3);
     	JoystickButton button3r = new JoystickButton(stick2, 3);
+    	JoystickButton button4r = new JoystickButton(stick2, 4);
     	JoystickButton button6r = new JoystickButton(stick2, 6);
     	JoystickButton button7r = new JoystickButton(stick2, 7);
 
-    	button1.whenPressed(new AutoAlign());
-    	button3l.whenPressed(new ArmDown());
+    	JoystickButton button10r = new JoystickButton(stick2, 10);
+    	
+    	button1l.whenPressed(new ArmDown());
+    	button1r.whenPressed(new ArmUp());
+    	button4r.whenPressed(new SwitchCamera());
+    	//button3l.whenPressed(new ArmDown());
     	//button3l.whenReleased(new Stop());
-    	button3r.whenPressed(new ArmUp());
+    	//button3r.whenPressed(new ArmUp());
     	//button3r.whenReleased(new Stop());
     	//button6r.whenPressed(new DriveForward());
-    	button6r.whenPressed(new LineDrive());
-    	button7r.whenPressed(new TestStuff());
+    	//button6r.whenPressed(new LineDrive());
+    	//button7r.whenPressed(new TestStuff());
+    	
+    	//button10r.whenPressed(new NewAuto());
     }
 	
     //// TRIGGERING COMMANDS WITH BUTTONS

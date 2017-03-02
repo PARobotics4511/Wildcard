@@ -36,11 +36,11 @@ public class DriveTrain extends Subsystem {
     
     public static void angleDriveStraight(double angle){
     	if(angle < 5 && angle > 0){
-    		DriveTrain.drive(-.2, -.4);
+    		DriveTrain.drive(.2, .4);
     	}else if(angle < 0 && angle > -5){
-    		DriveTrain.drive(-.4, -.2);
+    		DriveTrain.drive(.4, .2);
     	}else{
-    		DriveTrain.drive(-.6, -.6);
+    		DriveTrain.drive(.5, .5);
     	}
     }
     

@@ -9,17 +9,22 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+import org.usfirst.frc.team4511.robot.commands.Autonomous;
 import org.usfirst.frc.team4511.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4511.robot.commands.OtherAuto;
+import org.usfirst.frc.team4511.robot.commands.SideAuto;
 import org.usfirst.frc.team4511.robot.subsystems.Arm;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4511.robot.subsystems.GearLift;
 import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
+import org.usfirst.frc.team4511.robot.subsystems.SonarAnalog;
 import org.usfirst.frc.team4511.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4511.robot.subsystems.Sonar;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -35,14 +40,18 @@ public class Robot extends IterativeRobot {
 	public static final GearLift lift = new GearLift();
 	public static final PhotoEye leftEye = new PhotoEye(2);
 	public static final PhotoEye rightEye = new PhotoEye(3);
-	public static final PhotoEye middleEye = new PhotoEye(1);
+	//public static final PhotoEye middleEye = new PhotoEye(1);
 	public static final PhotoEye armEye = new PhotoEye(0);
 	public static final Arm armUno = new Arm(9);
 	public static final Arm armDos = new Arm(8);
+	public static final Sonar pulseFront = new Sonar(1, 0);
+	//public static final Sonar pulseBack = new Sonar(3, 3);
+	public static final SonarAnalog analogPulse = new SonarAnalog(1);
 	public static OI oi;
+	
 
     Command autonomousCommand;
-    SendableChooser chooser;
+	SendableChooser<Command> chooser = new SendableChooser<>();
     public static NetworkTable table;
     
     public Robot(){
@@ -54,12 +63,14 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser.addDefault("No Turn", new OtherAuto());
+        chooser.addObject("Turn", new Autonomous());
+        chooser.addObject("Side", new SideAuto());
         SmartDashboard.putData("Auto mode", chooser);
         CameraServer cam = CameraServer.getInstance();
-        cam.startAutomaticCapture("cam0", 0);
+        cam.startAutomaticCapture("FrontCam", 0);
+        CameraServer backCam = CameraServer.getInstance();
+        backCam.startAutomaticCapture("BackCam", 1);
         
        
     }
@@ -87,16 +98,21 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = chooser.getSelected();
         
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		/*String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
+		case "Turn":
+			autonomousCommand = new Autonomous();
 			break;
-		case "Default Auto":
+		case "No Turn":
+			autonomousCommand = new OtherAuto();
+			break;
+		case "Side":
+			autonomousCommand = new SideAuto();
+			break;
 		default:
-			autonomousCommand = new ExampleCommand();
+			autonomousCommand = new OtherAuto();
 			break;
 		} */
     	
@@ -122,14 +138,40 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    private static long lastPrint, currentTime;
+    private static boolean wasIn, hasDone;
+    
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if((Robot.armEye.getVoltage()*1000) > 3172){
+        SmartDashboard.putDouble("Gear Boi", Robot.armEye.getVoltage()*1000);
+        currentTime = System.currentTimeMillis();
+        boolean inPlace = (Robot.armEye.getVoltage()*1000) > 3345;
+        if (!hasDone){
+        	wasIn = inPlace;
+        	hasDone = true;
+        	lastPrint = System.currentTimeMillis();
+        	
+        }else if (wasIn != inPlace || lastPrint + 500 < currentTime){
+    		wasIn = inPlace;
+    		lastPrint = currentTime;
+    		if(inPlace){
+    			SmartDashboard.putBoolean("Gear in the Carriage?", true);
+    		} else {
+    			SmartDashboard.putBoolean("Gear in the Carriage?", false);
+    		}
+    		
+    	}
+    }
+    
+    /*public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+        //System.out.println(Robot.armEye.getVoltage()*1000);
+        if((Robot.armEye.getVoltage()*1000) > 3355){
         	System.out.println("Gear in place!");
         }else{
         	System.out.println("No gear! Get good kid.");
         }
-    }
+    }*/
     
     /**
      * This function is called periodically during test mode

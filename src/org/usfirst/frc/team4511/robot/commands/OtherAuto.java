@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Autonomous extends CommandGroup {
-    
-    public  Autonomous() {
+public class OtherAuto extends CommandGroup {
+
+    public OtherAuto() {
     	requires(Robot.drivetrain);
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addSequential(new NewAuto());
+    	addSequential(new AltAuto());
 
         // To run multiple commands at the same time,
         // use addParallel()

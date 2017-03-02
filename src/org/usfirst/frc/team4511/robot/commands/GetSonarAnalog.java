@@ -3,33 +3,39 @@ package org.usfirst.frc.team4511.robot.commands;
 import org.usfirst.frc.team4511.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TestStuff extends Command {
+public class GetSonarAnalog extends Command {
 
-    public TestStuff() {
+    public GetSonarAnalog() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.vision);
+    	requires(Robot.analogPulse);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//System.out.println("Distance: " + Robot.vision.getDistanceFromTarget().t);
-    	System.out.println("Left Eye: " + Robot.leftEye.getVoltage());
-    	System.out.println("Right Eye: " + Robot.rightEye.getVoltage());
-    	//System.out.println("Middle Eye: " + Robot.middleEye.getVoltage());
+    	 double distance = Robot.analogPulse.getDistance();
+    	 System.out.println("Rear: " + distance + " inches");
+    	 SmartDashboard.putNumber("Distance from Rear (in):", distance);
+    	 if(distance < 10){
+    		 SmartDashboard.putBoolean("Can Load Gear?: ", true);
+    	 } else {
+    		 SmartDashboard.putBoolean("Can Load Gear?: ", false);
+    	 }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

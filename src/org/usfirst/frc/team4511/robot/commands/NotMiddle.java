@@ -1,18 +1,20 @@
 package org.usfirst.frc.team4511.robot.commands;
 
 import org.usfirst.frc.team4511.robot.Robot;
+import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TestStuff extends Command {
+public class NotMiddle extends Command {
 
-    public TestStuff() {
+    public NotMiddle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.vision);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
@@ -21,10 +23,8 @@ public class TestStuff extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//System.out.println("Distance: " + Robot.vision.getDistanceFromTarget().t);
-    	System.out.println("Left Eye: " + Robot.leftEye.getVoltage());
-    	System.out.println("Right Eye: " + Robot.rightEye.getVoltage());
-    	//System.out.println("Middle Eye: " + Robot.middleEye.getVoltage());
+    	DriveTrain.drive(.5, .5);
+    	Timer.delay(3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,6 +34,7 @@ public class TestStuff extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	DriveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same
